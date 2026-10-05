@@ -83,7 +83,24 @@ def count_conflicts(board):
     #   1. in the same row
     #   2. on the same diagonal
 
-    pass
+    def count_conflicts(board):
+        conflicts = 0
+
+        for col1 in range(len(board)):
+            for col2 in range(col1 + 1, len(board)):
+
+                row1 = board[col1]
+                row2 = board[col2]
+
+                # For same row
+                if row1 == row2:
+                    conflicts += 1
+
+                # Same diagonal
+                elif abs(row1 - row2) == abs(col1 - col2):
+                    conflicts += 1
+
+        return conflicts
 
 
 # --------------------------------------------------

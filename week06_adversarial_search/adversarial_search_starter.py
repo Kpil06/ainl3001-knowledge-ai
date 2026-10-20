@@ -144,8 +144,39 @@ def minimax(state, maximizing, counter):
     # 3. For X (MAX), recursively choose the highest score.
     # 4. For O (MIN), recursively choose the lowest score.
     # Use make_move() to avoid changing the original board.
-    pass
+    
+    # Counts the current node
+    counter["nodes"] += 1
+    
+    # Stop searching if the game has ended
+    if is_terminal(state):
+        return utility(state)
 
+    if maximizing:
+        # X wants the highest score
+        best_score = float("-inf")
+
+        for move in available_moves(state):
+            new_state = make_move(state, move, "X")
+
+            score = minimax(new_state, False, counter)
+
+            best_score = max(best_score, score)
+
+        return best_score 
+
+    else:
+        # O wants the lowest score 
+        best_score = float("inf")
+
+        for move in available_moves(state):
+            new_state = make_move(sate, move, "O")
+
+            score = minimax(new_state, True, counter)
+
+            best_score = min(best_score, score)
+        
+        return best_score
 
 # --------------------------------------------------
 # TASK 4 AND 5 — BEST MOVE

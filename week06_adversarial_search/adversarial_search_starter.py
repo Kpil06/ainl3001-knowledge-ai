@@ -317,8 +317,26 @@ if __name__ == "__main__":
         print("\nBoard after Minimax move:")
         print_board(make_move(board, move_minimax, "X"))
 
+
     print("\nReflection:")
-    print("1. Why is Tic-Tac-Toe a search problem?")
-    print("2. Why does Minimax assume an optimal opponent?")
-    print("3. What is the purpose of a utility function?")
-    print("4. What happens as games become larger?")
+
+    print("\n1. Why is Tic-Tac-Toe a search problem?")
+    print("Tic-Tac-Toe is a search problem because the AI must explore")
+    print("possible moves and future board states to find the best move.")
+
+    print("\n2. Why does Minimax assume an optimal opponent?")
+    print("Minimax assumes the opponent plays optimally so the AI")
+    print("can choose the best guaranteed outcome, even if the")
+    print("opponent always makes the best possible move.")
+
+    print("\n3. What is the purpose of a utility function?")
+    print("A utility function assigns scores to game outcomes.")
+    print("X winning = +1, O winning = -1, and a draw = 0.")
+    print("Minimax uses these scores to determine the best move.")
+
+    print("\n4. What happens as games become larger?")
+    print("Larger games have more possible moves and states,")
+    print("making Minimax slower and more computationally expensive.")
+    print("Alpha-Beta Pruning helps by skipping unnecessary branches.")
+
+

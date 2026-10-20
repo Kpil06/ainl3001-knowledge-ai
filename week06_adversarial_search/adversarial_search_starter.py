@@ -90,8 +90,11 @@ def make_move(state, move, player):
 
 def check_winner(state):
     """Return 'X', 'O' or None by checking all winning lines."""
-    # TODO: Check each (a, b, c) in WINNING_LINES.
-    pass
+    for a, b, c in WINNING_LINES:
+        if state[a] !=" " and state[a] == state[b] == state[c]:
+            return state[a]
+
+    return None 
 
 
 # --------------------------------------------------
@@ -100,8 +103,10 @@ def check_winner(state):
 
 def is_terminal(state):
     """Return True for a win or a full board (draw)."""
-    # TODO: Detect a winner OR no remaining empty cells.
-    pass
+    return (
+        check_winner(state) is not None 
+        or len(available_moves(state)) == 0
+    )
 
 
 # --------------------------------------------------
@@ -113,8 +118,14 @@ def utility(state):
 
     Minimax calls this only at terminal states.
     """
-    # TODO: Use check_winner() and return +1, -1 or 0.
-    pass
+    winner = check_winner(state)
+
+    if winner == "X":
+        return 1
+    if winner == "O":
+        return -1
+
+    return 0
 
 
 # --------------------------------------------------

@@ -170,7 +170,7 @@ def minimax(state, maximizing, counter):
         best_score = float("inf")
 
         for move in available_moves(state):
-            new_state = make_move(sate, move, "O")
+            new_state = make_move(state, move, "O")
 
             score = minimax(new_state, True, counter)
 
@@ -209,29 +209,84 @@ def best_move(state, counter):
 # TASK 6 — ALPHA-BETA PRUNING
 # --------------------------------------------------
 
-def alpha_beta(state, maximizing, alpha, beta, counter):
-    """Return the same score as Minimax, pruning irrelevant branches.
 
-    alpha = best score MAX can guarantee so far.
-    beta  = best score MIN can guarantee so far.
-    """
-    # TODO: Adapt minimax():
-    # - MAX updates alpha; MIN updates beta.
-    # - Stop exploring remaining moves if alpha >= beta.
-    # - Count visited nodes exactly as in minimax().
-    pass
+def alpha_beta(state, maximizing, alpha, beta, counter):
+    """Return Minimax score with Alpha-Beta Pruning."""
+
+    counter["nodes"] += 1
+
+    if is_terminal(state):
+        return utility(state)
+
+    if maximizing:
+        best_score = float("-inf")
+
+        for move in available_moves(state):
+            new_state = make_move(state, move, "X")
+
+            score = alpha_beta(
+                new_state, False, alpha, beta, counter
+            )
+
+            best_score = max(best_score, score)
+            alpha = max(alpha, best_score)
+
+            if alpha >= beta:
+                break
+
+        return best_score
+
+    else:
+        best_score = float("inf")
+
+        for move in available_moves(state):
+            new_state = make_move(state, move, "O")
+
+            score = alpha_beta(
+                new_state, True, alpha, beta, counter
+            )
+
+            best_score = min(best_score, score)
+            beta = min(beta, best_score)
+
+            if alpha >= beta:
+                break
+
+        return best_score
+
 
 
 # --------------------------------------------------
 # TASK 6 — BEST MOVE WITH ALPHA-BETA
 # --------------------------------------------------
 
+
 def best_move_alpha_beta(state, counter):
-    """Return the best move index for X using Alpha-Beta search."""
-    # TODO: Like best_move(), but call alpha_beta().
-    # Start alpha at -infinity and beta at +infinity.
-    # Update alpha after each candidate X move.
-    pass
+    """Return the best move index using Alpha-Beta."""
+
+    if is_terminal(state):
+        return None
+
+    best_score = float("-inf")
+    chosen_move = None
+
+    alpha = float("-inf")
+    beta = float("inf")
+
+    for move in available_moves(state):
+        new_state = make_move(state, move, "X")
+
+        score = alpha_beta(
+            new_state, False, alpha, beta, counter
+        )
+
+        if score > best_score:
+            best_score = score
+            chosen_move = move
+
+        alpha = max(alpha, best_score)
+
+    return chosen_move
 
 
 # --------------------------------------------------
